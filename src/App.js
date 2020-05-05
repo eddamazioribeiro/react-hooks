@@ -1,31 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 
-class App extends Component{
-  state = {
-    count: 0
-  };
+const App = () => {
+  const [count, setCount] = useState(0);
 
-  increment = () => {
-    this.setState({
-      count: this.state.count + 1
-    })
-  };
+  const increment = () => {
+    setCount(count + 1);
+  }
 
-  clearCount = () => {
-    this.setState({
-      count: 0
-    })  
-  };
+  const clearCount = () => {
+    setCount(0);
+  }
 
-  render () {
-    return (
-      <div>
-        <h2>Counter App</h2>
-        <button onClick={this.increment}>Clicked {this.state.count} times</button>
-        <button onClick={this.clearCount}>Clear counter</button>
-      </div>
-    );
-  };
+  return (
+    <div>
+      <h2>Counter App</h2>
+      <button onClick={increment}>Clicked {count} times</button>
+      <button onClick={clearCount}>Clear counter</button>
+    </div>
+  );  
 }
 
 export default App;
