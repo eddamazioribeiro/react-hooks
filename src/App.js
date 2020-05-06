@@ -2,8 +2,9 @@ import React, { Component, useState, useEffect } from 'react';
 
 const App = () => {
   const [news, setNews] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('react');
   const fetchNews = () => {
-    fetch('https://hn.algolia.com/api/v1/search?query=react')
+    fetch(`https://hn.algolia.com/api/v1/search?query=${searchQuery}`)
       .then(result => result.json())
       .then(data => setNews(data.hits))
       .catch(err => console.error(err));
@@ -11,11 +12,22 @@ const App = () => {
 
   useEffect(() => {
     fetchNews();
-  });
+  }, [searchQuery]);
+
+  const handleChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   return(
     <div>
       <h2>News</h2>
+      <form>
+        <input
+          type='text'
+          value={searchQuery}
+          onChange={handleChange}/>
+        <button>Search</button>
+      </form>
       {news.map((n, i) => (
         <p key={i}>
           {n.title}
