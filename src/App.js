@@ -1,28 +1,53 @@
 import React, { Component, useState, useEffect } from 'react';
 
 const App = () => {
-  const [count, setCount] = useState(0);
+  const [news, setNews] = useState([]);
+  const fetchNews = () => {
+    fetch('https://hn.algolia.com/api/v1/search?query=react')
+      .then(result => result.json())
+      .then(data => setNews(data.hits))
+      .catch(err => console.error(err));
+  };
 
   useEffect(() => {
-    document.title = `Clicked ${count} times`;
+    fetchNews();
   });
 
-  const increment = () => {
-    setCount(count + 1);
-  }
-
-  const clearCount = () => {
-    setCount(0);
-  }
-
-  return (
+  return(
     <div>
-      <h2>Counter App</h2>
-      <button onClick={increment}>Clicked {count} times</button>
-      <button onClick={clearCount}>Clear counter</button>
+      <h2>News</h2>
+      {news.map((n, i) => (
+        <p key={i}>
+          {n.title}
+        </p>
+      ))}
     </div>
-  );  
+  );
 }
+
+// const App = () => {
+//   const [count, setCount] = useState(0);
+
+//   useEffect(() => {
+//     document.title = `Clicked ${count} times`;
+//   });
+
+//   const increment = () => {
+//     setCount(count + 1);
+//   }
+
+//   const clearCount = () => {
+//     setCount(0);
+//   }
+
+//   return (
+//     <div>
+//       <h2>Counter App</h2>
+//       <button onClick={increment}>Clicked {count} times</button>
+//       <button onClick={clearCount}>Clear counter</button>
+//     </div>
+//   );  
+// }
 
 // class App extends Component{
 //   state = {
