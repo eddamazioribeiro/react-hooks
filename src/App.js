@@ -27,84 +27,42 @@ const App = () => {
     setUrl(`https://hn.algolia.com/api/v1/search?query=${searchQuery}`);
   };
 
-  return(
-    <div>
-      <h2>News</h2>
+  const showLoading = () => {
+    return(
+      loading ? <h4>Loading...</h4> : ''
+    );
+  };
+
+  const searchForm = () => {
+    return(
       <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          value={searchQuery}
-          onChange={handleChange}/>
-        <button>Search</button>
-        {loading ? <h4>Loading...</h4> : ''}
-      </form>
-      {news.map((n, i) => (
+      <input
+        type='text'
+        value={searchQuery}
+        onChange={handleChange}/>
+      <button>Search</button>
+      {showLoading()}
+    </form>
+    );
+  };
+
+  const showNews = () => {
+    return(
+      news.map((n, i) => (
         <p key={i}>
           {n.title}
         </p>
-      ))}
+      ))
+    );
+  };
+
+  return(
+    <div>
+      <h2>News</h2>
+      {searchForm()}
+      {showNews()}
     </div>
   );
-}
-
-// const App = () => {
-//   const [count, setCount] = useState(0);
-
-//   useEffect(() => {
-//     document.title = `Clicked ${count} times`;
-//   });
-
-//   const increment = () => {
-//     setCount(count + 1);
-//   }
-
-//   const clearCount = () => {
-//     setCount(0);
-//   }
-
-//   return (
-//     <div>
-//       <h2>Counter App</h2>
-//       <button onClick={increment}>Clicked {count} times</button>
-//       <button onClick={clearCount}>Clear counter</button>
-//     </div>
-//   );  
-// }
-
-// class App extends Component{
-//   state = {
-//     count: 0
-//   };
-
-//   increment = () => {
-//     this.setState({
-//       count: this.state.count + 1
-//     })
-//   };
-
-//   clearCount = () => {
-//     this.setState({
-//       count: 0
-//     })  
-//   };
-
-//   componentDidMount() {
-//     document.title = `Clicked ${this.state.count} times`;
-//   }; 
-
-//   componentDidUpdate() {
-//     document.title = `Clicked ${this.state.count} times`;
-//   }; 
-
-//   render () {
-//     return (
-//       <div>
-//         <h2>Counter App</h2>
-//         <button onClick={this.increment}>Clicked {this.state.count} times</button>
-//         <button onClick={this.clearCount}>Clear counter</button>
-//       </div>
-//     );
-//   };
-// }
+};
 
 export default App;
