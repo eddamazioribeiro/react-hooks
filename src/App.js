@@ -4,11 +4,13 @@ const App = () => {
   const [news, setNews] = useState([]);
   const [searchQuery, setSearchQuery] = useState('react');
   const [url, setUrl] = useState('https://hn.algolia.com/api/v1/search?query=react');
+  const [loading, setLoading] = useState(false);
 
   const fetchNews = () => {
+    setLoading(true);
     fetch(url)
       .then(result => result.json())
-      .then(data => setNews(data.hits))
+      .then(data => (setNews(data.hits), setLoading(false)))
       .catch(err => console.error(err));
   };
 
@@ -34,6 +36,7 @@ const App = () => {
           value={searchQuery}
           onChange={handleChange}/>
         <button>Search</button>
+        {loading ? <h4>Loading...</h4> : ''}
       </form>
       {news.map((n, i) => (
         <p key={i}>
